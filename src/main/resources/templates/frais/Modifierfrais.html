@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="/css/bootstrap.min.css" rel="stylesheet" >
+</head>
+<body>
+    <div class="container" style="display:flex; justify-content:center ;align-items: center;">
+        <div class="row w-50">
+            <div class="col-md-8 mx-auto rounded border p-4 m-4" style="background-color:rgb(235, 214, 230);">
+                <h4 class="text-center mb-5">Modifier un frais</h4>
+                <!-- Affichage du message d'erreur -->
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span th:text="${errorMessage}" style="color:red;font-size:22px ;"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <form method="post" th:object="${fraisDto}" th:action="@{/modifierfrais}"  >
+                    <div class="row mb-3">
+                        <label for="idfrais" class="col-sm-4 col-form-label">id</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="idfrais" readonly  name="idfrais" class="form-control" th:field="*{idfrais}">
+                            </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="montant1" class="col-sm-4 col-form-label">Montant1</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="montant1" name="montant1" class="form-control" th:field="*{montant1}" required>
+                            <p th:if="${#fields.hasErrors('montant1')}" class="text-danger" th:errors="*{montant1}"></p>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="row mb-3">
+                        <label for="solde" class="col-sm-4 col-form-label">Montant2</label>
+                        
+                        <div class="col-sm-8">
+                            <input type="text" id="montant2" name="montant2" class="form-control" th:field="*{montant2}">
+                            <p th:if="${#fields.hasErrors('montant2')}" class="text-danger" th:errors="*{montant2}"></p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="solde" class="col-sm-4 col-form-label">Frais</label>
+                        
+                        <div class="col-sm-8">
+                            <input type="text" id="fraisdetransfert" name="fraisdetransfert" class="form-control" th:field="*{fraisdetransfert}">
+                            <p th:if="${#fields.hasErrors('fraisdetransfert')}" class="text-danger" th:errors="*{fraisdetransfert}"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="offset-sm-4 col-sm-4 d-grid">
+                            <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
+                        </div>
+                        <div class="col-sm-4 d-grid">
+                            <a class="btn btn-secondary btn-sm" href="/frais" role="button">Retour</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

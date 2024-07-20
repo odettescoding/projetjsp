@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>transfert d'argent en ligne</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" >
+      <style>
+        body{
+          background-color:rgb(234, 236, 236);
+          display:flex;
+          flex-direction: row;
+
+        }
+
+      </style>
+  </head>
+  <body>
+
+    
+      <div>
+        <nav style="background: rgb(252, 252, 252);padding: 8px; height: 100vh;">
+          <ul style="display: flex;flex-direction: column; list-style-type: none;gap:40px;justify-content:center; align-items: center;margin-right: 20px;">
+            <li><h4 style="text-align:center">Transfert d'argent <br>en ligne</h4></li>
+            <li><a href="/clients" style="text-decoration:none;list-style-type:none;color:green;font-weight:bold ;">Client</a></li>
+            <li><a href="/taux" style="list-style-type:none;text-decoration:none;color:black;">Taux</a></li>
+            <li><a href="/transfert" style="list-style-type:none;text-decoration:none;color:black;">Transaction</a></li>
+            <li><a href="/frais" style="list-style-type:none;text-decoration:none;color:black;">Frais</a></li>
+
+          </ul>
+        </nav>
+      </div>
+
+      <div style="margin-left: 6%;">
+        <div class="container">
+          <h4 class="text-center" style="font-weight:bold;text-align:center ; margin-top: 25px;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">CLIENTS</h4>
+          <!-- Formulaire de recherche -->
+            <!-- Formulaire de recherche aligné à droite -->
+          <div class="row">
+            <div class="col-8 d-flex justify-content-end">
+              <a class="btn btn-primary btn-sm " style="margin-bottom:5px ;"  href="/ajouterclient">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                </svg>
+              </a>
+                <form method="get" action="/rechercherclient" class="col-md-8 ms-auto rounded border p-4 mb-4" >
+                    <div style="display:flex;flex-direction:row; margin:5px; gap:10px" >
+                        <input type="search"  name="query"  placeholder="Rechercher par numéro de téléphone ou nom" style="width:8cm;" >
+                        <button type="submit" class="btn btn-primary ms-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                          </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+          </div>
+          <table class="table table-striped table-hover" style="margin-top:25px ;">
+              <thead>
+                  <tr>
+                      <th style="background-color:rgb(27, 92, 92);">Tel</th>
+                      <th style="background-color:rgb(27, 92, 92);">Nom</th>
+                      <th style="background-color:rgb(27, 92, 92);">Sexe</th>
+                      <th style="background-color:rgb(27, 92, 92);">Pays</th>
+                      <th style="background-color:rgb(27, 92, 92);">Solde</th>
+                      <th style="background-color:rgb(27, 92, 92);">Mail</th>
+                      <th style="background-color:rgb(27, 92, 92);">Action</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr th:each="client : ${clients}">
+                      <td th:text="${client.numtel}"></td>
+                      <td th:text="${client.nom}"></td>
+                      <td th:text="${client.sexe}"></td>
+                      <td th:text="${client.pays}"></td>
+                      <td th:text="${#numbers.formatDecimal(client.solde, 0, 'COMMA', 2, 'POINT')}"></td>
+                      <!-- <td th:text="${client.solde}"></td> -->
+                      <td th:text="${client.mail}"></td>
+                      <td style="white-space:nowrap ;">
+                        <a class="btn btn-primary btn-sm" th:href="@{/transferer(numtel=${client.numtel})}">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                            <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+                          </svg>
+                        </a>
+                        <a class="btn btn-success btn-sm" th:href="@{/modifierclient(numtel=${client.numtel})}">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                          </svg>
+                        </a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/supprimerclient(numtel=${client.numtel})}" onclick="return confirm('Voulez-vous vraiment supprimer ce client  ?')">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                          </svg>
+                        </a>
+                      </td>
+                  </tr>
+              </tbody>
+              
+          </table>
+      </div>
+      <div class="col-md-12">
+        <!-- Affichage de la notification de succès -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${successMessage}" style="color:white;font-size:12px ;background-color: green;border-top-right-radius: 5px;padding: 4px;"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${updateMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+          <span th:text="${updateMessage}" style="color:white;font-size:12px ;background-color: green;border-top-right-radius: 5px;padding: 4px;"></span>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <span th:text="${errorMessage}" style="color:white;font-size:12px ;background-color: red;border-top-right-radius: 5px;padding: 4px;margin-left:0.5cm;"></span>
+          
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div th:if="${successdeleteMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <span th:text="${successdeleteMessage}" style="color:white;font-size:12px ;background-color: red;border-top-right-radius: 5px;padding: 4px;"></span>
+          
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+    </div>
+  
+      </div>
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
